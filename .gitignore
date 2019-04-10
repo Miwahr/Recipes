@@ -1,0 +1,7 @@
+*.pyc
+*~
+__pucache__
+DjRecPr
+db.sqlite3
+.DS_Store
+.idea/

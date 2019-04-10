@@ -1,0 +1,57 @@
+{% load bootstrap4 %}
+<!DOCTYPE html>
+   <html>
+     <head>
+       <meta charset="utf-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <title>Лучшие рецепты</title>
+       {% bootstrap_css %}
+       {% bootstrap_javascript %}
+</head>
+     <body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+    <a class="nav-item nav-link active" href="{% url 'RecipesApp:index' %}">Домой
+    <span class="sr-only">(current)</span></a></a>
+
+    <a class="nav-item nav-link active" href="{% url 'RecipesApp:recipes' %}">Рецепты
+    <span class="sr-only">(current)</span></a>
+
+    {% if user.is_authenticated %}
+
+        <span class="navbar-text">Hello, {{ user.username }}.</span>
+
+    <a class="nav-item nav-link active" href="{% url 'RecipesApp:new_recipe' %}">Добавить рецепт
+    <span class="sr-only">(current)</span></a>
+
+    <a class="nav-item nav-link active" href="{% url 'users:logout' %}">Выйти
+    <span class="sr-only">(current)</span></a>
+
+     {% else %}
+
+    <a class="nav-item nav-link active" href="{% url 'users:register' %}">Регистрация
+    <span class="sr-only">(current)</span></a>
+
+        <a class="nav-item nav-link active" href="{% url 'users:login' %}">Войти
+        <span class="sr-only">(current)</span></a>
+
+
+     {% endif %}
+        </div>
+  </div>
+
+    <a class="nav-item nav-link text-success" href="{% url 'RecipesApp:rating' %}">Ингредиенты</a>
+<form class="form-inline" action="{% url 'RecipesApp:search' %}" method='post'>
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="text" name="s_word">
+<button class="btn btn-outline-success my-2 my-sm-0" name="submit">Искать</button>
+</form>
+</nav>
+<div class="jumbotron">
+{% block content %}
+{% endblock content %}
+    </div>
+     </body>
+   </html>

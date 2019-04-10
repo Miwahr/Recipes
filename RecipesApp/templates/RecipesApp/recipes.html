@@ -1,0 +1,41 @@
+{% extends "RecipesApp/base.html" %}
+{% block content %}
+<h1 class="display-4 text-center">Рецепты</h1>
+{% if user.is_authenticated %}
+<p class="lead text-right">
+    <a class="btn btn-primary btn-lg" href="{% url 'RecipesApp:new_recipe' %}" role="button">Добавить рецепт</a>
+</p>
+{% else %}
+<p class="text-right"><a href="{% url 'users:login' %}">Войдите</a>, чтобы добавить новый рецепт</p>
+{% endif %}
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row">
+        {% for recipe in recipes %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <a href="{% url 'RecipesApp:recipe' recipe.id %}">
+              <img class="img-fluid rounded mx-auto d-block rounded border" src="{{recipe.image.url}}" style="width: 200px; height: 200px; object-fit: cover;">
+            </a>
+              <div class="card-body">
+              <p class="card-text text-center">
+                <a href="{% url 'RecipesApp:recipe' recipe.id %}">{{ recipe }}</a>
+              </p>
+                <div class="d-flex justify-content-between">
+                  <small class="text-muted text-right">оценка: {{recipe.rating}}</small>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p class="lead">Ничего нет</p>
+            {% endfor %}
+
+      </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

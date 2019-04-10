@@ -1,0 +1,19 @@
+{% extends "RecipesApp/base.html" %}
+{% block content %}
+<h1 class="display-4">Результат поиска: "{{s_word}}"</h1>
+<table class="table table-hover">
+  <tbody>
+
+    {% for name, id in d.items %}
+      <tr>
+      <td>
+          <a href="{% url 'RecipesApp:recipe' id %}">{{ name }}</a>
+      </td>
+      </tr>
+
+    {% empty %}
+      <tr>Ничего не найдено</tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "RecipesApp/base.html" %}
+{% block content %}
+
+    <p class="lead">Добро пожаловать на мой сайт. Здесь собраны лучшие рецепты за всю историю человечества</p>
+<hr class="my-4">
+<p class="lead">Вы можете свободно <a href="{% url 'RecipesApp:recipes' %}">просматривать</a> их,
+    {% if user.is_authenticated %}
+    и
+<a href="{% url 'RecipesApp:new_recipe' %}">добавлять свои</a>
+{% else %}
+    но есть хотите добавлять свои, придется <a href="{% url 'users:register' %}">зарегистироваться</a> или
+<a href="{% url 'users:login' %}">войти</a>
+{% endif %}
+</p>
+
+{% endblock content %}

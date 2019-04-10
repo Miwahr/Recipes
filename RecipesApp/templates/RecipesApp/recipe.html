@@ -1,0 +1,48 @@
+{% extends "RecipesApp/base.html" %}
+{% block content %}
+<h1 class="display-4 text-center">{{ recipe.name }}</h1>
+{% if user.id == recipe.owner.id %}
+<p class="lead text-right">
+    <a class="btn btn-primary btn-lg" href="{% url 'RecipesApp:edit_recipe' recipe.id %}" role="button">редактировать</a>
+</p>
+{% endif %}
+<img class="img-fluid" src="{{recipe.image.url}}" width="300px">
+<p>{{recipe.image.url}}</p>
+<h3>Вам понадобятся:</h3>
+    <p>{{ recipe.ingred }}</p>
+<h3>Приготовление:</h3>
+<p>{{ recipe.text }}</p>
+<p class="text-right text-muted">Просмотров: {{recipe.count_views}}</p>
+<form class="form-inline" action="{% url 'RecipesApp:rating_recipe' recipe.id %}" method='post'>
+    {% csrf_token %}
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+    <button name="rating" type="submit" class="btn btn-secondary " value="1">1</button>
+    <button name="rating" type="submit" class="btn btn-secondary" value="2">2</button>
+    <button name="rating" type="submit" class="btn btn-secondary" value="3">3</button>
+    <button name="rating" type="submit" class="btn btn-secondary" value="4">4</button>
+    <button name="rating" type="submit" class="btn btn-secondary" value="5">5</button>
+  </div>
+</div>
+</form>
+<p class="text-success h5">Оценка: {{recipe.rating}}</p>
+<h3>Комментарии:</h3>
+{% for comment in comments %}
+<p>{{comment.owner}}: {{ comment.text }} <br>
+    <small class="text-muted">добавлен: {{comment.date_added}}</small></p>
+{% empty %}
+<p>Комментариев еще нет</p>
+{% endfor %}
+{% if user.is_authenticated %}
+<h3>Добавить комментарий:</h3>
+<form action="{% url 'RecipesApp:add_comment' recipe.id%}" method='post'>
+    {% csrf_token %}
+    <textarea class="form-control"  name="text" rows="3"></textarea>
+    <input type="hidden" name="recipe" value="{{recipe.id}}">
+    <button name="submit" class="btn btn-primary mb-2">Добавить</button>
+</form>
+{% else %}
+<p>Только зарегистрированные пользователи могут оставлять комментарии</p>
+{% endif %}
+
+{% endblock content %}

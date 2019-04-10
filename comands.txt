@@ -1,0 +1,11 @@
+python3 manage.py runserver                     запустить сервер
+django-admin.py startproject <имя> .            создать проект
+python manage.py migrate                        обновить бд
+python manage.py startapp <имя приложения>      создать приложение на сервере
+python manage.py makemigrations <имя прил>      создать бд приложения и затем нужно обновить migrate
+                                                после создания каждой модели
+python manage.py createsuperuser                создать суперпользователя (админа)
+python manage.py shell                          войти в консоль джанго
+python manage.py flush                          стереть бд и создать пустую
+pip install django-bootstrap3                   для оформления
+git --version                                   узнать версию чего-либо

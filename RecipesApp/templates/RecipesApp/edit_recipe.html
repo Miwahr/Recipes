@@ -1,0 +1,20 @@
+{% extends "RecipesApp/base.html" %}
+{% block content %}
+<h1 class="display-4 text-center">Редактировать</h1>
+  <form action="{% url 'RecipesApp:edit_recipe' recipe.id %}" method='post' enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+    <label for="RecipeName">{{form.name.label}}</label>
+      <input type="text" class="form-control" id="RecipeName" name="name" value="{{recipe.name}}">
+      <label for="RecipeIng">{{form.ingred.label}}</label>
+      <input type="text" class="form-control" id="RecipeIng" name="ingred" value="{{recipe.ingred}}">
+      <label for="RecipeText">{{form.text.label}}</label>
+      <textarea class="form-control" id="RecipeText" name="text" rows="3" >{{recipe.text}}</textarea>
+      <label>Изображение:</label>
+      <p><img src="{{recipe.image.url}}" width="150px"></p>
+    <p>{{ form.image }}</p>
+    <input type="hidden" name="owner" value="{{user.id}}">
+    <button name="submit" class="btn btn-primary mb-2">Сохранить</button>
+    </div>
+  </form>
+{% endblock content %}
