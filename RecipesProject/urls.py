@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from .settings import MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'', include('RecipesApp.urls', namespace='RecipesApp')),
     re_path(r'^users/', include('users.urls', namespace='users')),
 ]
+urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
